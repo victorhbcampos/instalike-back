@@ -4,11 +4,19 @@ import conectarAoBanco from "../config/dbConfig.js";
 const conexao = await conectarAoBanco(process.env.STRING_CONEXAO)
 
 // Função assíncrona para buscar todos os posts de um banco de dados MongoDB
-export default async function getTodosPosts() {
+export async function getTodosPosts() {
     // Seleciona o banco de dados "imersao-instabyte"
-    const db = conexao.db("imersao-instabyte")
+    const db = conexao.db("imersao-instabyte");
     // Seleciona a coleção "posts" dentro do banco de dados
-    const colecao = db.collection("posts")
+    const colecao = db.collection("posts");
     // Retorna um array com todos os documentos da coleção
-    return colecao.find().toArray()
+    return colecao.find().toArray();
+}
+
+export async function criarPost(novoPost) {
+    // Seleciona o banco de dados "imersao-instabyte"
+    const db = conexao.db("imersao-instabyte");
+    // Seleciona a coleção "posts" dentro do banco de dados
+    const colecao = db.collection("posts");
+    return colecao.insertOne(novoPost);
 }
